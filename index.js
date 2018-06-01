@@ -23,7 +23,7 @@ function alienData() {
           //alert(i);
       }
 
-      //create data in header row
+      //create data
       for(var i = 0; i < dataSet.length; i++){
           var alienRow = document.createElement("tr")
           alienBody.appendChild(alienRow);
@@ -68,31 +68,37 @@ function alienData() {
 alienData();
 
 
-
+var inputType = ["#searchDateTime","#searchCity","#searchState","#searchCountry","#searchShape"];
 //filter by date/time
- var $submitBtn = document.querySelector("#searchDateTime");
+ var $submitBtn = document.querySelector("#search");
 
 $submitBtn.addEventListener("click", function(){
-    var item = document.querySelector("#searchDateTimeInput").value;
+    
+    for(var i=0; i<inputType.length; i++){ 
+    var item = document.querySelector(inputType[i]).value;
     
     var alienBodyData = alienTable.querySelector("tbody").querySelectorAll("tr");
-    for(var i = 0; i <alienBodyData.length; i++){
-        var alienRow = alienBodyData[i];
-        var dateTime = alienRow.querySelector("td").innerHTML
+    
+    for(var j = 0; j <alienBodyData.length; j++){
+        var alienRow = alienBodyData[j];
+        var dateTime = alienRow.querySelectorAll("td")[i].innerHTML
 
         if(dateTime.indexOf(item) == -1){
             alienRow.style.display = 'none';
-        }
+        }}
         
-    //clear input form item
-    document.querySelector("#searchDateTimeInput").value = "";
+
 }});
 
 //clear filters on table
 var $clearBtn = document.querySelector("#clearSearch");
 
 $clearBtn.addEventListener("click", function(){
-
+    
+    //clear input form items
+    for(var i=0; i<inputType.length; i++){ 
+        document.querySelector(inputType[i]).value = "";
+    }
     var alienBodyData = alienTable.querySelector("tbody").querySelectorAll("tr");
     for(var i = 0; i <alienBodyData.length; i++){
         var alienRow = alienBodyData[i];
